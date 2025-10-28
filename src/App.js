@@ -82,34 +82,51 @@ const App = () => {
         })
     }
 
+  const loginForm = () => (
+    <form onSubmit={handleLogin}>
+      <div>
+        <label>
+          username
+          <input
+            type="text"
+            value={username}
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          password
+          <input
+            type="password"
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </label>
+      </div>
+      <button type="submit">login</button>
+    </form>
+  )
+
+  const noteForm = () => (
+    <form onSubmit={addNote}>
+      <input value={newNote} onChange={handleNoteChange} />
+      <button type="submit">save</button>
+    </form>
+  )
+
   return (
     <div>
       <h1>Notes app</h1>
       <Notification message={errorMessage} />
 
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+      {!user && loginForm()}
+      {user && (
         <div>
-          username
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
+          <p>{user.name} logged in</p>
+          {noteForm()}
         </div>
-        <div>
-          password
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-
+      )}
 
       <div>
         <button onClick={() => setShowAll(!showAll)}>
